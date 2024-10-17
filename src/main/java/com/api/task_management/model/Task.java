@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,8 +26,8 @@ public class Task {
     private String description;
     @Column(name = "task_status")
     private String status;
-    @Column(name = "task_start_date")
-    private Date startDate;
+    @Column(name = "task_start_date", columnDefinition = "DATE")
+    private LocalDate startDate;
     @Column(name = "task_estimated_days")
     private Integer estimatedDays;
 
@@ -36,4 +37,28 @@ public class Task {
     @OneToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @Transient
+    private LocalDate endDate;
+    @Transient
+    private long daysDelayed;
+
+    public LocalDate getEndDate() {
+        return this.getStartDate().plusDays(getEstimatedDays());
+    }
+
+    public long getDaysDelayed() {
+        if (isInTime() && isNotCompleted()) {
+            return ChronoUnit.DAYS.between(getEndDate(), LocalDate.now());
+        }
+        return 0;
+    }
+
+    public boolean isInTime() {
+        return getEndDate().isBefore(LocalDate.now());
+    }
+
+    public boolean isNotCompleted() {
+        return !getStatus().equals("FINALIZADO");
+    }
 }
