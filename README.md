@@ -50,7 +50,7 @@ El frontend, desarrollado en **Vue.js**, interactúa con esta API para visualiza
 
 El backend está desplegado en Render y está disponible en el siguiente enlace:
 
-- **Backend**: [https://task-management-spring-crud-api.onrender.com/api/tasks](https://task-management-spring-crud-api.onrender.com/api/tasks/all)
+- **Backend**: [https://task-management-spring-crud-api.onrender.com/api/tasks/all](https://task-management-spring-crud-api.onrender.com/api/tasks/all)
 
 ## Endpoints de la API
 
